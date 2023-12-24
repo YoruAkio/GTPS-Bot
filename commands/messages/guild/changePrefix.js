@@ -50,17 +50,17 @@ module.exports = {
 
             try {
                 let data = await prefixModel.findOne({
-                    guildId: message.guild.id,
+                    Guild: message.guild.id,
                 });
 
                 if (data) {
                     await prefixModel.findOneAndDelete({
-                        guildId: message.guild.id,
+                        Guild: message.guild.id,
                     });
 
                     let newData = new prefixModel({
-                        guildId: message.guild.id,
-                        prefix: prefix,
+                        Guild: message.guild.id,
+                        Prefix: prefix,
                     });
 
                     await newData.save();
@@ -70,8 +70,8 @@ module.exports = {
                     );
                 } else if (!data) {
                     let newData = new prefixModel({
-                        guildId: message.guild.id,
-                        prefix: prefix,
+                        Guild: message.guild.id,
+                        Prefix: prefix,
                     });
 
                     await newData.save();

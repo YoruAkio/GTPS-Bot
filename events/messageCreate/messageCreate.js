@@ -14,11 +14,11 @@ module.exports = {
             let custom;
 
             const data = await prefixModel
-                .findOne({ guildId: message.guild.id })
+                .findOne({ Guild: message.guild.id })
                 .catch(err => console.log(err));
 
             if (data) {
-                custom = data.prefix;
+                custom = data.Prefix;
             } else {
                 custom = client.config.defaultPrefix;
             }

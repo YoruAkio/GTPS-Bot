@@ -1,17 +1,17 @@
 const { Schema, model } = require('mongoose');
 
 const guildSchema = new Schema({
-    guildId: {
+    Guild: {
         type: String,
         required: true,
         unique: true,
     },
-    prefix: {
+    Prefix: {
         type: String,
         required: true,
         default: '-',
     },
-    levelLogs: {
+    LevelLogs: {
         type: String,
         required: false,
         default: null,
