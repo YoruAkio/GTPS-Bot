@@ -14,7 +14,7 @@ module.exports = {
             let custom;
 
             const data = await prefixModel
-                .findOne({ Guild: message.guild.id })
+                .findOne({ guildId: message.guild.id })
                 .catch(err => console.log(err));
 
             if (data) {
