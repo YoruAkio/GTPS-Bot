@@ -7,6 +7,8 @@ const {
     Collection,
     Partials,
 } = require('discord.js');
+const gtpsUtils = require('./utils/gtpsUtils');
+const Database = require('./utils/databaseUtils');
 
 const client = new Client({
     // Status of the bot
@@ -36,9 +38,10 @@ client.slashCommands = new Collection();
 client.colors = require('./conf.js').Colors;
 client.config = require('./conf.js').Bot;
 client.logger = require('./utils/Logger.js');
+client.gtps = new gtpsUtils(client);
 
 require('./utils/consoleRunning');
 require('./handlers/index')(client);
-require('./utils/databaseUtils').connect(client);
 
+Database.connect(client);
 client.login(process.env.TOKEN);
