@@ -6,13 +6,17 @@ module.exports = class Database {
      * @param {object} client - The client object
      */
     static async connect(client) {
-        if (client.config.mongo.isActive) {
+        if (client.config.mongoDb.isActive === true) {
             try {
                 mongoose.set('strictQuery', false);
-                await mongoose.connect(client.config.mongo.MONGO_URI, {
-                    keepAlive: true,
-                });
-                client.logger.info('Database', '🧶 Connected to DB.');
+                await mongoose
+                    .connect(client.config.mongoDb.MONGO_URI)
+                    .then(() => {
+                        client.logger.info(
+                            'Database',
+                            'Connected to the database!',
+                        );
+                    });
             } catch (error) {
                 client.logger.info('Database', `Error: ${error}`);
             }
