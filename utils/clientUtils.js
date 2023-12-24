@@ -1,5 +1,5 @@
-const { version } = require("../package.json");
-const client = require("../index");
+const { version } = require('../package.json');
+const client = require('../index');
 
 module.exports = class ClientUtils {
     /**
@@ -15,7 +15,7 @@ module.exports = class ClientUtils {
      * @param {Boolean} exact
      */
     static async resolveUsers(search, exact = false) {
-        if (!search || typeof search !== "string") return [];
+        if (!search || typeof search !== 'string') return [];
         const users = [];
 
         // check if userId is passed
@@ -42,11 +42,19 @@ module.exports = class ClientUtils {
         const minutes = Math.floor((timeInSeconds % 3600) / 60);
         const seconds = Math.round(timeInSeconds % 60);
         return (
-            (days > 0 ? `${days} days, ` : "") +
-            (hours > 0 ? `${hours} hours, ` : "") +
-            (minutes > 0 ? `${minutes} minutes, ` : "") +
-            (seconds > 0 ? `${seconds} seconds` : "")
+            (days > 0 ? `${days} days, ` : '') +
+            (hours > 0 ? `${hours} hours, ` : '') +
+            (minutes > 0 ? `${minutes} minutes, ` : '') +
+            (seconds > 0 ? `${seconds} seconds` : '')
         );
+    }
+
+    static getTimeNow() {
+        const time = new Date().toLocaleString('en-US', {
+            timeZone: 'Asia/Jakarta',
+        });
+
+        return time;
     }
 
     /**
@@ -54,31 +62,31 @@ module.exports = class ClientUtils {
      */
     static getInvite() {
         return client.generateInvite({
-            scopes: ["bot", "applications.commands"],
+            scopes: ['bot', 'applications.commands'],
             permissions: [
-                "Administrator",
-                "AddReactions",
-                "AttachFiles",
-                "BanMembers",
-                "ChangeNickname",
-                "Connect",
-                "DeafenMembers",
-                "EmbedLinks",
-                "KickMembers",
-                "ManageChannels",
-                "ManageGuild",
-                "ManageMessages",
-                "ManageNicknames",
-                "ManageRoles",
-                "ModerateMembers",
-                "MoveMembers",
-                "MuteMembers",
-                "PrioritySpeaker",
-                "ReadMessageHistory",
-                "SendMessages",
-                "SendMessagesInThreads",
-                "Speak",
-                "ViewChannel",
+                'Administrator',
+                'AddReactions',
+                'AttachFiles',
+                'BanMembers',
+                'ChangeNickname',
+                'Connect',
+                'DeafenMembers',
+                'EmbedLinks',
+                'KickMembers',
+                'ManageChannels',
+                'ManageGuild',
+                'ManageMessages',
+                'ManageNicknames',
+                'ManageRoles',
+                'ModerateMembers',
+                'MoveMembers',
+                'MuteMembers',
+                'PrioritySpeaker',
+                'ReadMessageHistory',
+                'SendMessages',
+                'SendMessagesInThreads',
+                'Speak',
+                'ViewChannel',
             ],
         });
     }
