@@ -11,11 +11,6 @@ const guildSchema = new Schema({
         required: true,
         default: '-',
     },
-    language: {
-        type: String,
-        required: true,
-        default: 'en',
-    },
     levelLogs: {
         type: String,
         required: false,
