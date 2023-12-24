@@ -14,7 +14,11 @@ const devName = figlet.textSync('Shinou', { font: 'ANSI Shadow' });
 
 console.info(gradient.fruit(devName));
 console.info(
-    gradient.instagram('Current Version: ' + ClientUtils.getVersion()),
+    gradient.instagram(
+        'Current Version: ' +
+            ClientUtils.getVersion() +
+            ` | Updated at ${ClientUtils.getTimeNow()}`,
+    ),
 );
 
 Logger.info(
