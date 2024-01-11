@@ -8,21 +8,8 @@ const {
     Partials,
 } = require('discord.js');
 const gtpsUtils = require('./utils/gtpsUtils');
-const Database = require('./utils/databaseUtils');
 
 const client = new Client({
-    // Status of the bot
-    presence: {
-        status: 'idle',
-        afk: true,
-        activities: [
-            {
-                name: 'Doing something with discord stuff',
-                type: ActivityType.Competing,
-            },
-        ],
-    },
-
     // Required in Discord.js v14
     intents: [Object.keys(GatewayIntentBits).filter(i => isNaN(i))],
     partials: [Object.keys(Partials).filter(i => isNaN(i))],
@@ -43,5 +30,4 @@ client.gtps = new gtpsUtils(client);
 require('./utils/consoleRunning');
 require('./handlers/index')(client);
 
-Database.connect(client);
 client.login(process.env.TOKEN);

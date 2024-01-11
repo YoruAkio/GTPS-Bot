@@ -30,7 +30,13 @@ module.exports = {
                         )}ms\n**API Latency:** ${Math.round(client.ws.ping)}ms`,
                     )
                     .setColor(client.colors.PINK)
-                    .setTimestamp(),
+                    .setTimestamp()
+                    .setFooter({
+                        text: `Triggered by ${message.author.tag}`,
+                        iconURL: message.author.displayAvatarURL({
+                            dynamic: true,
+                        }),
+                    }),
             ],
         });
     },

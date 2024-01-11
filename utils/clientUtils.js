@@ -1,5 +1,7 @@
 const { version } = require('../package.json');
-const client = require('../index');
+// const client = require('../index');
+const botData = require('../data/botData.json');
+const fs = require('fs');
 
 module.exports = class ClientUtils {
     /**
@@ -8,6 +10,22 @@ module.exports = class ClientUtils {
      */
     static getVersion() {
         return version;
+    }
+
+    /**
+     * @param {string} key
+     * @param {any} value
+     */
+    static changeBotData(key, value) {
+        botData[key] = value;
+        fs.writeFileSync('./data/botData.json', JSON.stringify(botData));
+    }
+    /**
+     * @param {string} key
+     * @returns {any} The value of the key.
+     */
+    static getBotData(key) {
+        return botData[key];
     }
 
     /**

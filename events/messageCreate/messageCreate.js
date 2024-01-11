@@ -1,6 +1,6 @@
-const prefixModel = require('../../models/Guild');
 const { Permissions, EmbedBuilder } = require('discord.js');
 const { commands } = require('../../index');
+const clientUtils = require('../../utils/clientUtils');
 
 module.exports = {
     name: 'messageCreate',
@@ -10,23 +10,7 @@ module.exports = {
      * @type {import("discord.js").Message} message
      */
     kioEventRun: async (client, message) => {
-        client.prefix = async function (message) {
-            let custom;
-
-            const data = await prefixModel
-                .findOne({ Guild: message.guild.id })
-                .catch(err => console.log(err));
-
-            if (data) {
-                custom = data.Prefix;
-            } else {
-                custom = client.config.defaultPrefix;
-            }
-
-            return custom;
-        };
-
-        const prefixData = await client.prefix(message);
+        const prefixData = clientUtils.getBotData('prefix');
 
         if (message.content.includes(`${client.user.id}`)) {
             return message.reply({
@@ -81,34 +65,6 @@ module.exports = {
             }
         }
 
-        if (commands.testOnly) {
-            if (!(message.guild.id === client.config.Bot.testServer)) {
-                return message.reply({
-                    embeds: [
-                        new EmbedBuilder()
-                            .setTitle('Test Server Only')
-                            .setDescription('This command cannot be ran here.')
-                            .setColor(client.colors.PINK),
-                    ],
-                });
-            }
-        }
-
-        if (command.isNsfw) {
-            if (!message.channel.nsfw) {
-                return message.reply({
-                    embeds: [
-                        new EmbedBuilder()
-                            .setTitle('NSFW Channel Only')
-                            .setDescription(
-                                'This command can only be ran in an NSFW channel.',
-                            )
-                            .setColor(client.colors.PINK),
-                    ],
-                });
-            }
-        }
-
         if (command.userPermissions?.length) {
             for (const permission of command.userPermissions) {
                 if (!message.member.permissions.has(permission)) {
@@ -118,23 +74,6 @@ module.exports = {
                                 .setTitle('Missing Permissions')
                                 .setDescription(
                                     `You do't have permission(s) \`${permission}\` to run this command`,
-                                )
-                                .setColor(client.colors.PINK),
-                        ],
-                    });
-                }
-            }
-        }
-
-        if (command.botPermissions?.length) {
-            for (const permission of command.botPermissions) {
-                if (!message.guild.me.permissions.has(permission)) {
-                    return message.reply({
-                        embeds: [
-                            new EmbedBuilder()
-                                .setTitle('Missing Permissions')
-                                .setDescription(
-                                    `I don't have permission(s) \`${permission}\` to run this command`,
                                 )
                                 .setColor(client.colors.PINK),
                         ],

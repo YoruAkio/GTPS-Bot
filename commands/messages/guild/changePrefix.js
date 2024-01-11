@@ -1,5 +1,5 @@
 const { EmbedBuilder } = require('discord.js');
-const prefixModel = require('../../../models/Guild');
+const clientUtils = require('../../../utils/clientUtils');
 
 /**
  * @type {import("@structures/Command")}
@@ -27,8 +27,8 @@ module.exports = {
                     new EmbedBuilder()
                         .setTitle('Prefix')
                         .setDescription(
-                            `My prefix for this server is \`${await client.prefix(
-                                message,
+                            `My prefix for this server is \`${clientUtils.getBotData(
+                                'prefix',
                             )}\``,
                         )
                         .setColor(client.colors.PINK)
@@ -48,38 +48,25 @@ module.exports = {
                     allowedMentions: { repliedUser: false },
                 });
 
-            try {
-                let data = await prefixModel.findOne({
-                    Guild: message.guild.id,
-                });
+            clientUtils.changeBotData('prefix', prefix);
 
-                if (data) {
-                    await prefixModel.findOneAndDelete({
-                        Guild: message.guild.id,
-                    });
+            const embed = new EmbedBuilder()
+                .setTitle('Prefix')
+                .setDescription(
+                    `Successfully changed the prefix to \`${prefix}\``,
+                )
+                .setColor(client.colors.PINK)
+                .setFooter({
+                    text: `Triggered by ${message.author.tag}`,
+                    iconURL: message.author.displayAvatarURL({
+                        dynamic: true,
+                    }),
+                })
+                .setTimestamp();
 
-                    let newData = new prefixModel({
-                        Guild: message.guild.id,
-                        Prefix: prefix,
-                    });
-
-                    await newData.save();
-                    client.logger.info(
-                        'Database',
-                        `Change data prefix to ${prefix}`,
-                    );
-                } else if (!data) {
-                    let newData = new prefixModel({
-                        Guild: message.guild.id,
-                        Prefix: prefix,
-                    });
-
-                    await newData.save();
-                    client.logger.info('Database', 'Created new data.');
-                }
-            } catch (err) {
-                client.logger.error('Database', `Error: ${err}`);
-            }
+            message.reply({
+                embeds: [embed],
+            });
 
             message.reply({
                 embeds: [
