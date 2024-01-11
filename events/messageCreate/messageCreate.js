@@ -50,6 +50,10 @@ module.exports = {
 
         if (!command) return;
 
+        if (command.category === 'gtps' && !client.config.botStatus) {
+            return message.reply('Bot status is disabled.');
+        }
+
         if (command.devOnly || command.onlyDev || command.isDev) {
             if (!client.config.Bot.devs.includes(message.author.id)) {
                 return message.reply({

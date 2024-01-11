@@ -24,10 +24,12 @@ client.slashCommands = new Collection();
 
 client.colors = require('./conf.js').Colors;
 client.config = require('./conf.js').Bot;
+client.serverData = require('./data/serverData.json');
 client.logger = require('./utils/Logger.js');
 client.gtps = new gtpsUtils(client);
 
 require('./utils/consoleRunning');
 require('./handlers/index')(client);
+require('./utils/serverDataGrabber')(client);
 
 client.login(process.env.TOKEN);

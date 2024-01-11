@@ -14,18 +14,32 @@ module.exports = {
         message.reply({
             embeds: [
                 new EmbedBuilder()
-                    .setTitle(
-                        'Growtopia Private Server',
-                        message.guild.iconURL(),
-                    )
-                    .setDescription(
-                        `**Online Players:** ${client.gtps.getOnlinePlayers()}`,
+                    .setTitle('Growtopia Private Server')
+                    .setThumbnail(message.guild.iconURL())
+                    .addFields(
+                        {
+                            name: '**Online**',
+                            value: client.serverData.online,
+                            inline: true,
+                        },
+                        {
+                            name: '**Players**',
+                            value: client.serverData.players,
+                            inline: true,
+                        },
+                        {
+                            name: '**Worlds**',
+                            value: client.serverData.worlds,
+                            inline: true,
+                        },
                     )
                     .setColor(client.colors.PINK)
                     .setTimestamp()
                     .setFooter({
-                        text: 'Growtopia Private Server',
-                        iconURL: message.guild.iconURL(),
+                        text: `Triggered by ${message.author.tag}`,
+                        iconURL: message.author.displayAvatarURL({
+                            dynamic: true,
+                        }),
                     }),
             ],
         });

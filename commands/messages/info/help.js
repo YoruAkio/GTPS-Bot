@@ -16,7 +16,7 @@ module.exports = {
             info: '🔍',
             moderation: '🔨',
             fun: '🎮',
-            misc: '🔧',
+            guild: '🔧',
             devs: '👑',
             gtps: '🔫',
         };
