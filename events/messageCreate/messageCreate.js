@@ -51,7 +51,16 @@ module.exports = {
         if (!command) return;
 
         if (command.category === 'gtps' && !client.config.botStatus) {
-            return message.reply('Bot status is disabled.');
+            return message.reply({
+                embeds: [
+                    new EmbedBuilder()
+                        .setTitle('Bot Status')
+                        .setDescription(
+                            `${client.emoji.warning} Bot status are disabled. Please ask for next information to the owner of this bot.`,
+                        )
+                        .setColor(client.colors.PINK),
+                ],
+            });
         }
 
         if (command.devOnly || command.onlyDev || command.isDev) {

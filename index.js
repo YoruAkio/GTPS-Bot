@@ -24,6 +24,7 @@ client.slashCommands = new Collection();
 
 client.colors = require('./conf.js').Colors;
 client.config = require('./conf.js').Bot;
+client.emoji = require('./conf.js').Emoji;
 client.serverData = require('./data/serverData.json');
 client.logger = require('./utils/Logger.js');
 client.gtps = new gtpsUtils(client);
